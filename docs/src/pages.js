@@ -250,6 +250,9 @@ const pages = [
         pathname: '/lab/layout',
       },
       {
+        pathname: '/lab/tree-view',
+      },
+      {
         ...findPages[2].children[1],
         title: 'API',
       },
