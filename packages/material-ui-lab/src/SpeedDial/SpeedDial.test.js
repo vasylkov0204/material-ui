@@ -4,9 +4,9 @@ import { assert } from 'chai';
 import { spy } from 'sinon';
 import {
   createMount,
-  createShallow,
   findOutermostIntrinsic,
   getClasses,
+  testRef,
   wrapsIntrinsicElement,
 } from '@material-ui/core/test-utils';
 import Icon from '@material-ui/core/Icon';
@@ -16,7 +16,6 @@ import SpeedDialAction from '../SpeedDialAction';
 
 describe('<SpeedDial />', () => {
   let mount;
-  let shallow;
   let classes;
 
   const icon = <Icon>font_icon</Icon>;
@@ -33,7 +32,6 @@ describe('<SpeedDial />', () => {
 
   before(() => {
     mount = createMount();
-    shallow = createShallow({ dive: true });
     classes = getClasses(
       <SpeedDial {...defaultProps} icon={icon}>
         <div />
@@ -43,6 +41,15 @@ describe('<SpeedDial />', () => {
 
   after(() => {
     mount.cleanUp();
+  });
+
+  it('does forward refs', () => {
+    testRef(
+      <SpeedDial {...defaultProps} icon={icon}>
+        <SpeedDialAction icon={<Icon>save_icon</Icon>} tooltipTitle="Save" />
+      </SpeedDial>,
+      mount,
+    );
   });
 
   it('should render with a minimal setup', () => {
@@ -75,11 +82,11 @@ describe('<SpeedDial />', () => {
   });
 
   it('should render with a null child', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <SpeedDial {...defaultProps} icon={icon}>
-        <SpeedDialAction tooltipTitle="One" />
+        <SpeedDialAction tooltipTitle="One" icon={icon} />
         {null}
-        <SpeedDialAction tooltipTitle="Three" />
+        <SpeedDialAction tooltipTitle="Three" icon={icon} />
       </SpeedDial>,
     );
     assert.strictEqual(wrapper.find(SpeedDialAction).length, 2);
