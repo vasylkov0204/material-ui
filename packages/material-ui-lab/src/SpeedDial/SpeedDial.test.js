@@ -228,23 +228,16 @@ describe('<SpeedDial />', () => {
 
   describe('dial focus', () => {
     let actionRefs;
-    let dialButtonRef;
     let onkeydown;
     let wrapper;
 
     const mountSpeedDial = (direction = 'up', actionCount = 6) => {
       actionRefs = [];
-      dialButtonRef = undefined;
       onkeydown = spy();
 
       wrapper = mount(
         <SpeedDial
           {...defaultProps}
-          ButtonProps={{
-            ref: ref => {
-              dialButtonRef = ref;
-            },
-          }}
           direction={direction}
           icon={icon}
           onKeyDown={onkeydown}
@@ -284,8 +277,7 @@ describe('<SpeedDial />', () => {
      * @returns true if the button of the nth action is focused
      */
     const isActionFocused = index => {
-      const expectedFocusedElement = index === -1 ? dialButtonRef : actionRefs[index];
-      return expectedFocusedElement === window.document.activeElement;
+      return getActionButton(index).is(':focus');
     };
     /**
      * promisified setImmediate
@@ -298,7 +290,7 @@ describe('<SpeedDial />', () => {
       }
 
       mountSpeedDial(direction);
-      dialButtonRef.focus();
+      getDialButton().find('button').simulate('focus');
     };
 
     it('displays the actions on focus gain', () => {
