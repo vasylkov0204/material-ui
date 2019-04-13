@@ -86,7 +86,7 @@ const initialNavigationState = {
 const SpeedDial = React.forwardRef(function SpeedDial(props, ref) {
   const {
     ariaLabel,
-    ButtonProps: { buttonRef: origDialButtonRef, ...ButtonProps } = {},
+    ButtonProps: { ref: origDialButtonRef, ...ButtonProps } = {},
     children: childrenProp,
     classes,
     className: classNameProp,
@@ -129,7 +129,6 @@ const SpeedDial = React.forwardRef(function SpeedDial(props, ref) {
   const handleKeyboardNavigation = event => {
     const key = keycode(event);
     const { focusedAction, nextItemArrowKey = key } = state;
-
     if (key === 'esc') {
       closeActions(event, key);
     } else if (utils.sameOrientation(key, direction)) {

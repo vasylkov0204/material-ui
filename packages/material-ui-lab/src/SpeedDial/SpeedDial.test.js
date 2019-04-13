@@ -271,7 +271,7 @@ describe('<SpeedDial />', () => {
       if (actionIndex === -1) {
         return getDialButton();
       }
-      return wrapper.find(SpeedDialAction).at(actionIndex);
+      return wrapper.find('button').at(actionIndex+1);
     };
     /**
      * @returns true if the button of the nth action is focused
@@ -391,6 +391,7 @@ describe('<SpeedDial />', () => {
 
         await testCombination('left', ['left', 'left', 'left', 'right'], [0, 1, 2, 1]);
         await testCombination('left', ['right', 'right', 'right', 'left'], [0, 1, 2, 1]);
+        wrapper.unmount();
       });
 
       it('ignores array keys orthogonal to the direction', async () => {
@@ -398,6 +399,7 @@ describe('<SpeedDial />', () => {
         await testCombination('right', ['right', 'up', 'down', 'right'], [0, 0, 0, 1]);
         await testCombination('down', ['down', 'left', 'right', 'down'], [0, 0, 0, 1]);
         await testCombination('left', ['left', 'up', 'down', 'left'], [0, 0, 0, 1]);
+        wrapper.unmount();
       });
 
       it('does not wrap around', async () => {
@@ -405,6 +407,7 @@ describe('<SpeedDial />', () => {
         await testCombination('right', ['right', 'left', 'left', 'right'], [0, -1, -1, 0]);
         await testCombination('down', ['down', 'up', 'up', 'down'], [0, -1, -1, 0]);
         await testCombination('left', ['left', 'right', 'right', 'left'], [0, -1, -1, 0]);
+        wrapper.unmount();
       });
     });
   });
