@@ -271,7 +271,7 @@ describe('<SpeedDial />', () => {
       if (actionIndex === -1) {
         return getDialButton();
       }
-      return wrapper.find(SpeedDialAction).at(actionIndex);
+      return wrapper.find('button').at(actionIndex+1);
     };
     /**
      * @returns true if the button of the nth action is focused
@@ -372,7 +372,7 @@ describe('<SpeedDial />', () => {
             )} should be ${expectedFocusedAction}`,
           );
         });
-
+        wrapper.unmount();
         /**
          * Tooltip still fires onFocus after unmount ("Warning: setState unmounted").
          * Could not fix this issue so we are using this workaround
@@ -391,7 +391,7 @@ describe('<SpeedDial />', () => {
         await testCombination('down', ['up', 'up', 'up', 'down'], [0, 1, 2, 1]);
 
         await testCombination('left', ['left', 'left', 'left', 'right'], [0, 1, 2, 1]);
-        await testCombination('left', ['right', 'right', 'right', 'left'], [0, 1, 2, 1]);
+        await testCombination('left', ['right', 'right', 'right', 'left'], [0, 1, 2, 1])
       });
 
       it('ignores array keys orthogonal to the direction', async () => {

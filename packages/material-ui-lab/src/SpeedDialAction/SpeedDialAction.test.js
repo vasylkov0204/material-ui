@@ -79,8 +79,7 @@ describe('<SpeedDialAction />', () => {
     it('should be called when a click is triggered', () => {
       const handleClick = spy();
       const wrapper = mount(<SpeedDialAction {...defaultProps} open onClick={handleClick} />);
-      const buttonWrapper = wrapper.childAt(0);
-      buttonWrapper.simulate('click');
+      wrapper.find('button').simulate('click');
       assert.strictEqual(handleClick.callCount, 1);
     });
   });
