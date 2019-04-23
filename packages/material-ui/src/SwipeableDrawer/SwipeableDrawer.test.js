@@ -71,47 +71,38 @@ describe('<SwipeableDrawer />', () => {
 
   it('should render a Drawer and a SwipeArea', () => {
     const wrapper = mount(
-      <SwipeableDrawerNaked
+      <SwipeableDrawer
         onOpen={() => {}}
         onClose={() => {}}
         open={false}
-        theme={createMuiTheme()}
       />,
-    ).find('SwipeableDrawer'); // unwrap withForwardedRef
-    assert.strictEqual(wrapper.childAt(0).type(), Drawer);
-    assert.strictEqual(
-      wrapper
-        .childAt(1)
-        .childAt(0)
-        .type(),
-      SwipeArea,
-    );
+    ); // unwrap withForwardedRef
+    assert.strictEqual(wrapper.find(Drawer).exists(), true);
+    assert.strictEqual(wrapper.find(SwipeArea).exists(), true);
   });
 
   it('should hide the SwipeArea if swipe to open is disabled', () => {
     const wrapper = mount(
-      <SwipeableDrawerNaked
+      <SwipeableDrawer
         onOpen={() => {}}
         onClose={() => {}}
         open={false}
-        theme={createMuiTheme()}
         disableSwipeToOpen
       />,
-    ).find('SwipeableDrawer');
-    assert.strictEqual(wrapper.children().length, 1);
+    );
+    assert.strictEqual(wrapper.find(SwipeArea).exists(), false);
   });
 
   it('should accept user custom style', () => {
     const customStyle = { style: { backgroundColor: 'hotpink' } };
     const wrapper = mount(
-      <SwipeableDrawerNaked
+      <SwipeableDrawer
         onOpen={() => {}}
         onClose={() => {}}
         open={false}
-        theme={createMuiTheme()}
         PaperProps={customStyle}
       />,
-    ).find('SwipeableDrawer');
+    );
 
     assert.strictEqual(wrapper.props().PaperProps, customStyle);
   });
@@ -553,7 +544,7 @@ describe('<SwipeableDrawer />', () => {
       assert.strictEqual(consoleErrorMock.callCount(), 1);
       assert.include(
         consoleErrorMock.args()[0][0],
-        'Warning: Failed prop type: Invalid prop `PaperProps.component` supplied to `SwipeableDrawer`. Expected an element type that can hold a ref.',
+        'Warning: Failed prop type: Invalid prop `PaperProps.component` supplied to `ForwardRef(SwipeableDrawer)`. Expected an element type that can hold a ref.',
       );
     });
 
@@ -570,7 +561,7 @@ describe('<SwipeableDrawer />', () => {
       assert.strictEqual(consoleErrorMock.callCount(), 1);
       assert.include(
         consoleErrorMock.args()[0][0],
-        'Warning: Failed prop type: Invalid prop `ModalProps.BackdropProps.component` supplied to `SwipeableDrawer`. Expected an element type that can hold a ref.',
+        'Warning: Failed prop type: Invalid prop `ModalProps.BackdropProps.component` supplied to `ForwardRef(SwipeableDrawer)`. Expected an element type that can hold a ref.',
       );
     });
   });
